@@ -1,0 +1,35 @@
+//
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        int [] output = new int[nums.Length];
+        int [] left = new int[nums.Length];
+        int [] right = new int[nums.Length];
+        int lproduct =1, rproduct=1;
+        for(int i=0, j=nums.Length-1; i<nums.Length; i++, j--){
+            
+            lproduct *= nums[i];
+            left[i] = lproduct;
+            
+            rproduct *= nums[j];
+            right[j] = rproduct;
+    
+            //output[i] = product;
+        }
+        
+        for(int i=0; i<nums.Length; i++){
+            int l=1, r=1;
+            if(i==0)
+                l =1;
+            else
+                l = left[i-1];
+                
+            if(i+1==nums.Length)
+                r =1;
+            else
+                r = right[i+1];
+                
+            output[i] = l * r;
+        }
+        return output;
+    }
+}
