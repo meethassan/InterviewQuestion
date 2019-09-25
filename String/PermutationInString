@@ -1,0 +1,101 @@
+public class Solution {
+    public bool CheckInclusion(string s1, string s2) {
+         bool inclusion = false;
+         int [] s1Map = getMap(s1);
+        
+        //s2 =String.Concat(s2.OrderBy(s=>s));
+        //Console.WriteLine(s1 + " " + s2);
+        
+        
+        List<String> subStrs = getSubStr(s2,s1.Length);
+        foreach(string s in subStrs){
+            //construct map for s
+            int [] sMap = getMap(s);
+            //check if map matces to s1s map
+            if(match(sMap,s1Map))
+                return true;
+        }
+        //Console.WriteLine(subStrs.Count().ToString() + " " + string.Join(",",subStrs));
+    
+      //String s1Sorted =String.Concat(s1.OrderBy(s=>s));
+        //if(subStrs.Contains(s1Sorted))
+          //  return true;
+       // else
+         //   return false;
+        
+        //get permutation p of s1
+       // List<string> perms =
+         //   getPermutations(s1);
+        
+        //check if p is substring s2
+        //for each p check sub str in s2
+       /* foreach(string s in perms){
+            if(s2.Contains(s))
+                return true;
+        }*/
+        return inclusion;
+    }
+    
+    bool match(int []a, int [] b){
+        for(int i=0; i<26; i++){
+            if(a[i] != b[i])
+                return false;
+        }
+        return true;
+    }
+    int [] getMap(string s){
+        int [] arr = new int[26];
+        foreach(char c in s){
+            arr[c - 'a'] = arr[c - 'a'] +1;
+        }
+        return arr;
+    }
+    
+    List<string> getSubStr(string inp, int size) {
+        HashSet<string> subStrs = new HashSet<string>();
+        for(int i=0;i+size-1<inp.Length;i++){//abc 2, ab bc
+            subStrs.Add(
+                inp.Substring(i,size));
+        }
+        
+        return subStrs.ToList();
+    }
+    
+    
+    
+    
+    List<string> getPermutations(string inp) {
+        //boundary case, null case
+
+        HashSet<string> perms = new HashSet<string>();
+        ////abc: abc,bac,bca, acb, cab, 
+        //loop on each ch then put it in every placeholder
+        
+        for(int i=0;i<inp.Length;i++){//0,a ; 1,b ; 2,c
+           for(int j=0;j<inp.Length;j++){//0,a ; 1,b ; 2,c |
+            //swap values at i and j
+            string swapped = 
+                swapCharInStr(inp,i,j);
+
+            Console.WriteLine(i.ToString() + " " + j.ToString() + " " + swapped);//0,abc ; 1,bac ; 2, cba | 2,acb | 1,cab ; 2a
+            if(!perms.Contains(swapped)){
+                perms.Add(swapped);
+            }
+            
+           }   
+        }
+        Console.WriteLine(string.Join(",", perms));
+        return perms.ToList();
+        
+    }
+    
+    string swapCharInStr(string s, int i,int j){
+        //abc 2,0
+        StringBuilder str = new StringBuilder(s);
+        char temp = str[j]; //a
+        str[j] = str[i];//cbc
+        str[i] = temp;//cba
+        
+        return str.ToString();
+    }
+}
