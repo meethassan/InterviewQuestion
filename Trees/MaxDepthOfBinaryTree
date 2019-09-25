@@ -1,0 +1,24 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int MaxDepth(TreeNode root) {
+        
+        return TraverseTree(root,0);
+    }
+    
+    int TraverseTree(TreeNode node,int depth){
+        
+        if(node==null)
+            return depth;
+        depth++;
+        return Math.Max(TraverseTree(node.left,depth),
+                        TraverseTree(node.right, depth));
+    }
+}
