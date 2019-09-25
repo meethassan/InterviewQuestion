@@ -1,0 +1,95 @@
+public class Solution {
+    public int[][] FloodFill(int[][] image, int sr, int sc, int newColor) {
+        int length = image.Length;
+        int width = image[0].Length;
+        int oldColor = image[sr][sc];
+        int[,] visited = new int[length,width];
+        Queue<Pixel> pixelsToProcess = new Queue<Pixel>();
+        Pixel start = new Pixel(sr,sc);
+        Console.WriteLine(length.ToString() + " " + width.ToString() + " " +start.ToString());
+        pixelsToProcess.Enqueue(start);
+    
+        while(pixelsToProcess.Count()>0){
+            Pixel cPixel = pixelsToProcess.Dequeue();
+            //set new color 
+            if(image[cPixel.row][cPixel.col] == oldColor){
+                image[cPixel.row][cPixel.col] = newColor;
+
+                List<Pixel> t = Neighbors(cPixel,
+                          length, width);
+                //Console.WriteLine(string.Join(",",t));
+
+                foreach(Pixel p in t){
+                    if(image[p.row][p.col] == oldColor
+                      && visited[cPixel.row,cPixel.col] == 0)
+                        pixelsToProcess.Enqueue(p);
+                }
+            }
+            
+            visited[cPixel.row,cPixel.col] = 1;
+        }
+        
+       return image;
+    }
+    
+    List<Pixel> Neighbors(Pixel p, int l, int w){
+        List<Pixel> neighbors = new List<Pixel>();
+         
+        //top
+        if(p.row-1 >= 0)
+            neighbors.Add(new Pixel(p.row-1, p.col));
+        
+        //top right
+       // if(p.row-1 >= 0 && p.col+1 < w)
+         //   neighbors.Add(new Pixel(p.row-1, p.col+1));
+        
+        //right
+        //Console.WriteLine("right " + p.col.ToString() + " " + w.ToString()); 
+        if(p.col+1 < w){
+            Pixel p1 = new Pixel(p.row, p.col+1);
+           // Console.WriteLine(p1);
+            neighbors.Add(new Pixel(p.row, p.col+1));
+            //neighbors.ElementAt(0).ToString();
+        }
+        
+        //bottom right
+       // if(p.row+1 < l && p.col+1 < w)
+         //   neighbors.Add(new Pixel(p.row+1, p.col+1));
+        
+        //bottom
+        if(p.row+1 < l)
+            neighbors.Add(new Pixel(p.row+1, p.col));
+        
+        //bottom left
+        //if(p.row+1<l && p.col-1  >= 0)
+          //  neighbors.Add(new Pixel(p.row+1, p.col-1));
+        
+        //left
+        if(p.col -1 >= 0)
+            neighbors.Add(new Pixel(p.row, p.col-1));
+        
+        //top left
+        //if(p.row-1 >=0 && p.col -1 >= 0)
+          //  neighbors.Add(new Pixel(p.row-1, p.col-1));
+        
+       // Console.WriteLine(string.Join(",",neighbors));
+       // foreach (Pixel a in neighbors)
+          //  Console.WriteLine("print " + a.row.ToString() + " : " + a.col.ToString());
+        return neighbors;
+    }
+    
+}
+
+
+public class Pixel {
+    public Pixel(int _row, int _col){
+        row = _row;
+        col = _col;
+    }
+    public int row {get;}
+    public int col {get;}
+    
+    public override string ToString(){
+        return row.ToString() + ":" +col.ToString();
+    }
+}
