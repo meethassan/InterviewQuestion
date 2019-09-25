@@ -1,0 +1,14 @@
+public class Solution {
+    public int HammingWeight(uint n) {
+        uint q = n;
+        int result =0;
+        while(q>0){
+            uint r = q%2;
+            q = q/2;
+            if(r==1)
+                result++;
+        }
+        
+        return result;
+    }
+}
