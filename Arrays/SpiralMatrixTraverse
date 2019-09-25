@@ -1,0 +1,109 @@
+public class Solution {
+    public IList<int> SpiralOrder(int[][] matrix) {
+        List<int> output = new List<int>();
+        int length = matrix.Length;
+        if(length==0 || matrix[0] ==null)
+            return output;
+        int width = matrix[0].Length;
+        int i=0;
+        int [][] visited = new int[length][];
+        for( i=0; i<length; i++){
+            visited[i] = new int[width];
+        }
+        
+        int [] dr = new int[] {0,1,0,-1};
+        int [] dc = new int[] {1,0,-1,0};
+        int di =0, r = 0,c = 0;
+        //i=0;
+        
+        for(i=0; i< length*width; i++){
+           
+            visited[r][c] = 1;
+            output.Add(matrix[r][c]);
+            
+            int next_r = r + dr[di];
+            int next_c = c + dc[di];
+            
+            if(0<= next_r && next_r < length &&
+               0<= next_c && next_c < width &&
+               visited[next_r][next_c] != 1){
+                //continue direction
+                r = next_r;
+                c = next_c;
+            }
+            else{
+                //spiral change direction
+                di = (di + 1)%4;
+                r = r + dr[di];
+                c = c + dc[di];
+            }
+        }
+        return output;
+    }
+    
+  /*  List<int> TraverseArr(int [][] matrix, 
+               int verticalDir,
+                int horizontalDir,
+                Point from,
+                Point to
+               ){
+        List<int> output = new List<int>();
+        Point cPoint = new Point(from.x,from.y);
+        
+        //Console.WriteLine();
+        bool last = true;
+        int d = from.Distance(to);
+        Console.WriteLine(from.ToString() + " - " + to.ToString() + " , " + d.ToString() );
+        while(d>=0){
+            
+            //Console.WriteLine(cPoint.ToString());
+            output.Add(matrix[cPoint.x][cPoint.y]);
+            cPoint.move(verticalDir,horizontalDir);
+            d--;
+        }
+        
+        return output;
+    }
+}
+
+public class Point {
+    public int x;
+    public int y;
+    
+    public Point (int _x, int _y){
+        x = _x;
+        y = _y;
+    }
+    
+    public override string ToString(){
+        return x.ToString() + "," + y.ToString();
+    }
+    public bool equals(Point b){
+        if(this.x == b.x &&
+          this.y == b.y)
+            return true;
+        else
+            return false;
+    }
+    
+    public Point move(int offset_x, int offset_y){
+        x+=offset_x;
+        y+=offset_y;
+        
+        return this;
+    }
+    
+    public int Distance(Point to){
+        int r = 0;
+        if(this.equals(to))
+            return 0;
+        else if(this.x != to.x){
+            r = to.x - this.x;
+        }
+        else{
+            r = to.y - this.y;
+        }
+        
+        return r<0? r*-1:r;
+    }*/
+}
