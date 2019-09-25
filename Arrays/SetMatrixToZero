@@ -1,0 +1,53 @@
+public class Solution { 
+    int length = 0;
+        int width = 0;
+        int bigger =0, smaller=0;
+    int [][] processed;
+    HashSet<int> pr, pc;
+    public void SetZeroes(int[][] matrix) {
+        length = matrix.Length;
+         width = matrix[0].Length;
+         bigger =0;
+        smaller=0;
+        
+        if(length>=width){
+            bigger = length;
+            smaller = width;
+        }
+        else{
+            bigger = width;
+            smaller = length;
+        }
+        pr = new HashSet<int>(); 
+        pc = new HashSet<int>(); 
+        //processed = new int[length][];
+       
+        for(int i=0; i<length; i++){
+            for(int j=0; j<width; j++){
+                if(matrix[i][j] == 0){
+                    //if(!pr.Contains(i)||!pc.Contains(j))
+                    //{
+                      //  SetRowColZero(matrix,i,j);
+                        pr.Add(i);
+                        pc.Add(j);
+                   // }
+                   // break;
+                }
+            }
+        }
+        
+         for(int i=0; i<length; i++){
+            for(int j=0; j<width; j++){
+                    if(pr.Contains(i)||pc.Contains(j))
+                        matrix[i][j]= 0;
+                    //{
+                      //  SetRowColZero(matrix,i,j);
+                        //pr.Add(i);
+                        //pc.Add(j);
+                   // }
+                   // break;
+                }
+        }
+    }
+    
+}
