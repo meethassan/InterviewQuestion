@@ -1,0 +1,45 @@
+class Solution:
+    stack = ""
+    def isValid(self, s: str) -> bool:
+        if s == "":
+            return 1
+  
+        for i in range(len(s)):
+            #if detect closing then check stack
+            if s[i] == ')': 
+                closing = self.pop()
+                if closing != '(':
+                    return 0;
+            elif s[i] == '}': 
+                closing = self.pop()
+                if closing != '{':
+                    return 0;
+            elif s[i] == ']': 
+                closing = self.pop()
+                if closing != '[':
+                    return 0; 
+            else:#keep adding to stack until first closing
+              self.push(s[i])
+            #print(stack)
+        if len(self.stack) == 0:
+            return 1
+        else:
+            return 0
+        
+    
+    def push(self, c: str):
+        self.stack = c + self.stack
+        return
+    
+    def pop(self) -> str:
+       # print(self.stack)
+        if len(self.stack) == 0:
+            return ""
+        r = self.stack[0]
+        if len(self.stack) == 1:
+            self.stack = ""
+        else:
+            self.stack = self.stack[1:]
+        return r
+        
+        
