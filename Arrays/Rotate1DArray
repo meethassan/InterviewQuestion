@@ -1,0 +1,29 @@
+public class Solution {
+    public void Rotate(int[] nums, int k) { 
+        /*
+        [1,2,3] k = 2
+        [1,2,1] t = 3 2
+        [1,3,1] t = 2 1
+        */
+        int [] output = new int[nums.Length];
+        //int tempValue = nums[0],  tempIndex = 0;
+        //int i =0, counter = 0;
+        
+        for(int i=0; i<nums.Length; i++){
+            int newIndex = i+k;
+            if(newIndex > nums.Length-1)
+                newIndex = newIndex%nums.Length;
+            
+            output[newIndex] = nums[i];
+            //Console.WriteLine(string.Join(",",output.ToList()));
+        }
+        
+        for (int i = 0; i < nums.Length; i++) {
+            nums[i] = output[i];
+        }
+       
+      //nums = output;
+    }
+    
+
+}
