@@ -1,3 +1,4 @@
+//Solution that does -1 the & then compare to 0 is better
 public class Solution {
     public int HammingWeight(uint n) {
         uint q = n;
