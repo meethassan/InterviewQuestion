@@ -1,0 +1,22 @@
+public class Solution {
+    Dictionary<int,int> map;
+    public int ClimbStairs(int n) {
+        
+        if(n==0)
+            return 0;
+        
+        map = new Dictionary<int,int>();
+        map.Add(1,1);
+        map.Add(2,2);
+       return CalcWays(n);
+    }
+    
+    int CalcWays(int n){
+        if(map.ContainsKey(n))
+            return map[n];
+        
+        int result = CalcWays(n-1) + CalcWays(n-2);
+        map.Add(n,result);
+        return result;
+    }
+}
