@@ -1,0 +1,114 @@
+public class TimeBasedValue {
+    public int time;
+    public string value;
+    public TimeBasedValue(int _time, string _value){
+        time = _time;
+        value = _value;
+    }
+}
+
+public class TimeMap {
+
+    /** Initialize your data structure here. */
+    Dictionary<string,
+               Stack<TimeBasedValue>> map;
+    
+    public TimeMap() {
+        map = new Dictionary<string,Stack<TimeBasedValue>>();
+    }
+    
+    public string Get(string key, int timestamp) {
+        //look up key
+        Stack<TimeBasedValue> st; 
+        if(map.ContainsKey(key)){
+            st = map[key];
+            //call get from stack
+            return getMaxStack(st,timestamp);
+        }
+        else
+            return "";
+        
+    }
+    
+    public void Set(string key, string value, int timestamp) {
+        Stack<TimeBasedValue> st; 
+        //if key does not exist
+        if(map.ContainsKey(key)){
+            st = map[key];
+            insertMaxStack(st,new TimeBasedValue(timestamp,value));
+            
+        }
+        else{//if key already exists enter in stack
+           st = new Stack<TimeBasedValue>();
+            st.Push(new TimeBasedValue(timestamp,value));
+        }
+        map[key] = st;
+    }
+    
+    void insertMaxStack(Stack<TimeBasedValue> st, TimeBasedValue newVal ){
+        Stack<TimeBasedValue> tempStack = new  Stack<TimeBasedValue>();
+        while (st.Count > 0)
+        {
+            //pop elements to another stack
+            // until you find the right place
+            var timeVal = st.Pop();
+            
+            if(timeVal.time<= newVal.time){
+                st.Push(timeVal);
+                st.Push(newVal);
+                break;
+            }
+            else
+                tempStack.Push(timeVal);
+        }
+        
+        //push back rest of values what you popped
+        // push val
+        if(tempStack.Count()>0){
+            while(tempStack.Count()>0){
+                st.Push(tempStack.Pop());
+            }
+        } 
+    }
+    
+    string getMaxStack(Stack<TimeBasedValue> st, int time ){
+        //pop elements to another stack
+        // until you find the right place <= timestamp
+        // return value
+        // push val
+        //push back rest of values what you popped
+        
+        Stack<TimeBasedValue> tempStack = new  Stack<TimeBasedValue>();
+        string returnVal = "";
+        while (st.Count > 0)
+        {
+            //pop elements to another stack
+            // until you find the right place
+            var timeVal = st.Pop();
+            tempStack.Push(timeVal);
+            if(timeVal.time<= time){
+                returnVal = timeVal.value;
+                break;
+            }
+            
+        }
+        
+        //push back rest of values what you popped
+        // push val
+        if(tempStack.Count()>0){
+            while(tempStack.Count()>0){
+                st.Push(tempStack.Pop());
+            }
+        }
+        return returnVal;
+    }
+    
+    
+}
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.Set(key,value,timestamp);
+ * string param_2 = obj.Get(key,timestamp);
+ */
