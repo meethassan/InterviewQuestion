@@ -1,0 +1,16 @@
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        #if 0th > t return t
+        if nums[0]>=target or len(nums) ==0:
+            return 0
+        cIndex = 0
+        #loop over list
+        for i in range(len(nums)):
+            #if found return
+            if(nums[i]==target):
+                return i
+            elif nums[i]< target:  # increase i if current number is smaller
+                cIndex = i+1
+            elif nums[i]> target:
+                break;
+        return cIndex
