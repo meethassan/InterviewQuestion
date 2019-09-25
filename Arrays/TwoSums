@@ -1,0 +1,15 @@
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        for(int i=0;i<nums.Length;i++){
+            for(int j=i+1;j<nums.Length;j++){
+            if(nums[i]+nums[j]==target)
+                return new int [] {i,j};
+            }
+        }
+        return new int [1];// just because this is not a factory methods
+    }
+       
+}
+
+//n2 for each element of x look at x+1 to match target
+//sort then I can find the other number using difference that would make it n log(n)
