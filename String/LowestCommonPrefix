@@ -1,0 +1,38 @@
+class Solution:
+    def readAllStrs(self, i:int,strs:List[str]) -> str:
+        if len(strs[0]) <= i:
+          return ""
+        else:
+          c = strs[0][i]
+        for s in strs:
+            #2 3
+            if len(s) <= i:
+                return ""
+            elif s[i]!=c:
+                print(str(i) + " " + s[i] + " " + c)
+                return ""
+            #print(s)
+        return c
+    
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if len(strs) == 0 or strs[0] == "":
+            return ""
+        
+        #start reading all reading from 0
+        #s = strs[0][0]
+        #print(s)
+        result = ""
+        i = 0
+        while 1:
+         # if strs[i] == "":
+           # return ""
+          readChar = self.readAllStrs (i,strs)
+          if readChar == "":
+            break
+          else:
+            result += readChar
+          i = i +1
+            
+        return result
+
+        
