@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class BSTIterator {
+
+    Queue<int> myQueue;
+    
+    private void Traverse(TreeNode node){
+        if(node != null){
+            Traverse(node.left);
+            //Console.WriteLine(node.val.ToString());
+            myQueue.Enqueue(node.val);
+            Traverse(node.right);
+        }
+    }
+    
+    public BSTIterator(TreeNode root) {
+       myQueue = new Queue<int>(); 
+       Traverse(root);
+       Console.WriteLine(string.Join(",", myQueue));
+    }
+    
+    /** @return the next smallest number */
+    public int Next() {
+        return myQueue.Dequeue();
+    }
+    
+    /** @return whether we have a next smallest number */
+    public bool HasNext() {
+        if(myQueue.Count()>0)
+            return true;
+        else
+            return false;
+    }
+}
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.Next();
+ * bool param_2 = obj.HasNext();
+ */
