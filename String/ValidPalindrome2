@@ -1,0 +1,39 @@
+public class Solution {
+    public bool ValidPalindrome(string s) {
+        bool differentCharAllowed = true;
+        bool isPalindrome = false;
+        if(s.Length < 3)
+            return true;
+        else if(s.Length == 3 && s[0]!=s[2]) 
+            return false;
+        //abddbca -> abddba -> true
+        //tebbem run for 
+        //loop over string 0 to i-1 & i+1 to length
+        for(int l=0, r= s.Length-1; l<r; l++, r--){
+            if(s[l]!=s[r]){
+                return (isPalindrom(s.Substring(l+1,r-l)) 
+                  || isPalindrom(s.Substring(l,r-l)));
+            }
+            
+            
+           isPalindrome = true;
+        }
+        return isPalindrome;
+    }  
+    
+    public static string Reverse( string s )
+    {
+        char[] charArray = s.ToCharArray();
+        Array.Reverse( charArray );
+        return new string( charArray );
+    }
+    
+    bool isPalindrom(string s){
+        Console.WriteLine(s);
+        if(s == Reverse(s))
+            return true;
+        else
+            return false;
+    }
+ 
+}
