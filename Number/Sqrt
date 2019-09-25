@@ -1,0 +1,28 @@
+class Solution {
+    public int mySqrt(int x) {
+        double f = 1.0d;
+        double q = 1.0d;
+        
+        if(x==0)
+            return 0;
+        
+        while(true)
+        {
+            q= x/f;
+            
+            if(q<f)
+            {
+                return (int)(f-1);
+            }
+            else if(f==q)
+            {
+                return (int)f;
+            }
+           f++;
+        }
+    }
+}
+// 8,1,1
+// 8,1,8
+// 8,2.4
+// 8,3,2.6
