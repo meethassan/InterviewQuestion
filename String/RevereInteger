@@ -1,0 +1,31 @@
+class Solution:
+    def reverse(self, x: int) -> int:
+        """
+        :type x: int
+        :rtype: int
+        """
+        negative = 0
+        if x==0:
+          return x
+        elif x < 0:
+          negative = 1
+          x *= -1
+        q = x;
+        reversed = 0
+        
+        while q > 0:
+            #pop
+            m = q%10
+            #next digit
+            q = int(q/10)
+            #add digit to number
+            reversed = reversed * 10 + int(m)
+            if len(bin(reversed)[2:]) > 31:
+                return 0
+            #print(str(q) + " " + str(m) + " " + str(reversed))
+        
+        if negative == 1:
+            return reversed * -1
+        else:
+            return reversed
+        
