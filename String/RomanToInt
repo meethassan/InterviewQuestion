@@ -1,0 +1,76 @@
+class Solution:
+    #roman to int
+    # 7 5+1+1 VII
+    #49 XLIX 10 + 10 + 10 + 9
+    #79 10 + 10 + 50 + 9   LXXIX
+    # "MCMXCIV" 1000 + 900 +
+    def map1(self,d : str) -> int:
+       #HT for map and 4 & 9
+        m = {"I":{"V":4,"X":9,"*":1},
+                   "V":5,
+                   "X":{"L":40,"C":90,"*":10},
+                   "L":50,
+                   "C":{"D":400,"M":900,"*":100},
+                   "D":500,
+                   "M":1000}
+        #print(m)
+        s1 = d[0]
+        if s1 in m:
+            if isinstance(m[s1],dict):
+                m2 = m[s1]
+                #print(s1 +" "+ d + " ",m2)
+            
+                #print(d + " " + str(m2))
+                if len(d)>1 and d[1] in m2:
+                    #print("1")
+                    return m[s1][d[1]]
+                else:
+                    #print("2" + " " + str(m2["*"]))
+                    return m2["*"]
+            else:
+              #throw exception
+              return m[s1]
+    
+    
+    def romanToInt(self, s: str) -> int:
+        m = {"I":{"V":4,"X":9,"*":1},
+                   "V":5,
+                   "X":{"L":40,"C":90,"*":10},
+                   "L":50,
+                   "C":{"D":400,"M":900,"*":50},
+                   "D":500,
+                   "M":1000}
+        result = 0
+        il = [4,9,40,90,400,900]
+        l = 0
+        slen = len(s)
+        #start reading from left
+        for i in range(len(s)):
+         # print("start" +)
+         # print(s+ " " +str(i) + " " +s[i])
+          mapped = ""
+          print("start" + str(i))
+          #map every number
+          if slen < 1 or i+1 > slen-1:
+           mapped = self.map1(s[i])
+           
+          else:
+            mapped = self.map1(s[i]+s[i+1])
+            
+          
+          #add to existing running count
+          if isinstance(mapped,int) and l==0:
+                result+=int(mapped)
+          elif l ==1:
+            l = 0
+          if mapped in il:
+            print("skipping " +s[i+1])
+            l =1
+          #else:
+          #  print("not mapped " + str(mapped) + " " + str(il))
+          print(s[i] + " " + str(i) + " " + str(mapped) + " " + str(result))
+        
+        
+        #return sum
+        return result
+    
