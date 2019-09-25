@@ -1,0 +1,48 @@
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        #null 0 case
+        if len(s)<2:
+            return len(s)
+        
+        #find all sub strings
+        subStrs = self.findAllSubStr(s)
+        #print(subStrs)
+        
+        pSubStrs = 0
+        #loop all sub string
+        for s in subStrs:
+            #each str check if palindrome
+            if self.isPalindrome(s):
+                #add to counter if palindrom
+                pSubStrs+=1;
+        return pSubStrs
+    
+    def findAllSubStr(self,s:str)->list:
+        subStrs = [s]
+        #subStrs.add(s)
+        #print(subStrs)
+        maxLen = len(s)
+        #print("maxLen " + str(maxLen))
+        for l in range(1,maxLen): #1
+            for i in range(0,maxLen):#0,1,2
+                
+                if i+l > maxLen:
+                    cStr = ""
+                    break
+                cStr = s[i:i+l]
+               # print(cStr + str(i) + " " + str(i+l))
+               # for j in range(i,i+l):#0:1,1:2,2:3
+                   # if j >= maxLen:
+                    #    cStr = ""
+                     #   break
+                   # cStr += s[j]
+               # print(str(i) + " " + cStr)
+                if cStr != "":
+                    subStrs.append(cStr)
+        return subStrs
+    
+    def isPalindrome(self,s:str)->int:
+        if s == s[::-1]:
+            #print(s)
+            return 1
+        return 0
