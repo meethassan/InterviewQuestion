@@ -1,0 +1,19 @@
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        q = x
+        m =x
+        t = 0
+        if x == 0:
+            return 1
+        s = ""
+        while int(q) > 0:
+         m = int(q%10)
+         q /= 10
+         t = t * 10 + m
+         print("test " + str(t))
+         s = s + str(int(m))
+        if x == t:
+          return 1
+        else:
+          return 0
+        
