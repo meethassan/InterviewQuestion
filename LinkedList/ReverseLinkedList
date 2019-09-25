@@ -1,0 +1,60 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class RecurData {
+public ListNode head;
+    public ListNode tail;
+}
+
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        //iterative
+        return ReverseListIter(head);
+        
+        //recursive
+        return ReverseListRecu(head).head;
+    }
+    
+    //3-2-3-2
+    //3
+    ListNode ReverseListIter(ListNode head){
+        ListNode revHead =null;
+        //loop over list
+        ListNode copy = head;
+        //keep inserting at head
+        
+        while(copy!=null){
+            ListNode newNode = new ListNode(copy.val);
+            if(revHead == null)
+                revHead = newNode;
+            else
+            {
+                newNode.next = revHead;
+                revHead = newNode;
+            }
+            
+            copy = copy.next;
+        }
+        
+        return revHead;
+    }
+    
+    RecurData ReverseListRecu(ListNode node){
+        if(node==null){
+           RecurData a = new RecurData();
+                a.head = node;
+                a.tail = node;
+            
+            return a;
+        }
+        
+        RecurData r = ReverseListRecu(node);
+        r.tail.next = node;
+        return r;
+    }
+}
