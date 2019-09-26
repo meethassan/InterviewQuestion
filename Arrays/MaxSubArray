@@ -3,9 +3,24 @@ public class Solution {
        //holding water approach is still n2
         if(nums == null || nums.Length ==0)
             return 0;
-        //start from right and keep running max
-        int max = Int32.MinValue;
         
+
+        //start from right and keep running max
+        int max = nums[0];
+        int sum = nums[0];
+        //do we extend the sub array or take just num[i]
+         for(int i=1; i<nums.Length; i++){
+            
+             if(nums[i]> sum + nums[i])
+                 sum = nums[i];
+             else
+                 sum += nums[i];
+             
+             max = Math.Max(max,sum);
+             Console.WriteLine(i.ToString() + " " + max.ToString());
+         }
+        
+        /* BRUTE FORCE
         //[-2,1,-3,4,-1,2,1,-5,4]
         //[1,3,2,5,1,2,0,-1,4]
         for(int i=0; i<nums.Length; i++){
@@ -17,7 +32,7 @@ public class Solution {
             }
             
         }
-        
+        */
         return max;
     }
 }
