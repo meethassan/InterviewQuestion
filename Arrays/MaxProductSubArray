@@ -1,0 +1,36 @@
+public class Solution {
+    public int MaxProduct(int[] nums) {
+        
+        if (nums.Length == 0) return 0;
+        int total = nums[0];   
+        int maxP = nums[0];
+        int minP2 = nums[0];
+        //cannot use because can't break into sub problems dynamic programming calculting max at each sub arry
+        // if product sub array at a[i] > a[0 ->i-1] take a[i] as max
+        
+         /*
+       Why do we need min value ? Because min value multiplies another min value will yield a possibly max value. That's why we need to keep track of min value as well. Otherwise, it will be no different than maximum subarray problem which we keep track of max value only.
+       */
+        int runningp = nums[0], runningp2 = nums[0];
+        for(int i=1; i<nums.Length; i++){
+            
+            runningp = maxP *nums[i];
+            runningp2= minP2 * nums[i];
+             maxP = Math.Max(Math.Max(runningp,runningp2),nums[i]);
+            minP2 = Math.Min(Math.Min(runningp,runningp2),nums[i]);
+            //}
+            //else if(nums[i]<0){
+            // runningp2 = runningp2*nums[i] > nums[i]? runningp2*nums[i] : nums[i];
+            // runningp = runningp*nums[i] > nums[i]? runningp*nums[i] : nums[i];
+            
+            //for(int j=i+1; j<nums.Length; j++){
+            //runningp = runningp*nums[i] > nums[i]? runningp*nums[i] : nums[i];
+                
+                //maxP = Math.Max(runningp,maxP);
+            //}
+            total = Math.Max(maxP,total);
+        }
+        
+        return total;
+    }
+}
