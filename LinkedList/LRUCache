@@ -1,0 +1,136 @@
+//Need to turn this to O(1) used LinkList nodes as values of dictionary
+
+public class LRUCache {
+    //LAEBOWIT
+    //CIBDHDI
+    int _capacity;
+    int currentCapacity;
+    int counter;
+    //queue in
+    Dictionary<int,int> usageQueue;
+    //ht kv
+    Dictionary<int,int> keyValueMap;
+    public LRUCache(int capacity) {
+        _capacity = capacity;
+        currentCapacity = 0;
+        usageQueue = new Dictionary<int,int>();
+        keyValueMap = new Dictionary<int,int>();
+        counter = 0;
+    }
+    /*
+    [{1,1}],2 t1
+    [{1,1},{2,2}],2 t2
+    get 1, t3
+    put 3,3 evict 2
+    get 2 returns-1
+    put 4,4 1 evicted
+    
+    
+    2,1
+    1,2
+    3,1
+    4,3
+    
+    HT for storing
+    Queue for lRU
+    1, set
+    1.2, set
+    1.2,3, set
+    ^
+    
+    2 get 
+    
+    2,1 get enqueu dequeu
+    1,3 2 evicted
+    3,4 1 evited
+    
+    */
+    public int Get(int key) {
+        //if exists else retun -1
+        if(keyValueMap.ContainsKey(key)){
+            //update existing lru dequeu and enqueue
+             counter++;
+            usageQueue[key] = counter;
+            //hash table  to support 0(1)
+            return keyValueMap[key];
+        }
+        return -1;
+    }
+    //1,2,3,4
+    //^ get
+          
+    //1,2,3,4
+    //  ^
+    
+    //1,2
+    // t
+    // 2 q
+
+    void UpdateLRU(int key){
+       
+    }
+    /*
+    1,1 
+    1,1  2,2
+    1,3 2,2
+    1,3
+    4,1
+    */
+        
+    public void Put(int key, int value) {
+        //key already exists set
+        // update exisint lru dequeu and enqueue
+        if(keyValueMap.ContainsKey(key)){
+            //update existing lru dequeu and enqueue
+             counter++;
+            usageQueue[key] = counter;
+            
+            keyValueMap[key] = value;
+            return;
+        }
+        else{
+            //current capacity + 1 reached lru item
+            if(keyValueMap.Count()+1 > _capacity){
+                // queue size counter check
+                //evict dequeue and remove from HT
+                //1,3 2,
+                //print(usageQueue);
+                int min = Int32.MaxValue;
+                int minKey = -1;
+                //1,3 2,4
+                foreach(KeyValuePair<int,int> kv in usageQueue){
+                    if(min >= kv.Value){
+                        minKey = kv.Key;
+                        min = kv.Value;
+                    }
+                }
+                keyValueMap.Remove(minKey);
+                usageQueue.Remove(minKey);
+                currentCapacity--;
+                //print(usageQueue);
+            }
+
+            //put add to ht and queue update lru
+            counter++;
+            usageQueue.Add(key,counter);
+            keyValueMap.Add(key,value);
+            //increase currentCapacity
+            currentCapacity++;
+        }
+    }
+    void print(Dictionary<int,int> t){
+        string s = "";
+        foreach(KeyValuePair<int,int> kv in t){
+                    s+=kv.Key.ToString() + ","  + kv.Value.ToString() + " ";
+                }
+        Console.WriteLine(s);
+        
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.Get(key);
+ * obj.Put(key,value);
+ */
