@@ -1,0 +1,78 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ LAEBOWIT
+ if max dept can fit in call stack
+  intution in order traversal using reucursion create string then compare strings
+  for 2 trees
+  p depth = pd
+  q depth = qd
+  Max(pd,qd) = n 
+  O(2^n)
+  
+  if I do BFS instead I can break recursion as soon as the string stops matching
+   1,2
+   1,null,2
+   
+   p 12nullnullnull
+   q 1null2
+ */
+public class Solution {
+    public bool IsSameTree(TreeNode p, TreeNode q) {
+        
+        //boundary case
+        //start recusion p    // traversal
+        string pStr = TraverseTree(p);
+        
+        //start recusrion q
+        string qStr = TraverseTree(q,pStr);
+            
+        //when null return trees don't match
+        if(pStr ==null || qStr == null)
+            return false;
+        else if(pStr == qStr)
+            return true;
+        
+        return false;
+     
+    }
+    string TraverseTree(TreeNode n, string match = null){
+        String returnStr = "";
+        //base case
+        //if n null return empty
+        if(n==null)
+            return "";
+        
+        //recusive case
+        returnStr += n.val.ToString();
+        if(match != null){
+            
+            //if first tree was empty
+            if(match.Length == 0)
+                return null;
+            //123
+            //1
+            string temp = match.Substring(0,returnStr.Length);
+            if(temp != returnStr)
+                return null;
+        }
+        if(n.left!=null)
+            returnStr += TraverseTree(n.left);
+        else
+            returnStr += "null";
+        
+        if(n.right!=null)
+            returnStr += TraverseTree(n.right);
+        else
+            returnStr += "null";
+        //add n to output call left add to output call right add to output
+        //if match not matching break recursion return null
+        // match get length of small string b compare with substring of a
+        return returnStr;
+    }
+}
